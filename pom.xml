@@ -14,6 +14,8 @@
         <module>Labwork3</module>
         <module>Labwork4</module>
         <module>Labwork5</module>
+        <module>Labwork2/Application</module>
+        <module>Labwork2/Core</module>
     </modules>
 
     <properties>
