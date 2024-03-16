@@ -17,13 +17,22 @@ public class CatDao implements CatDaoInterface {
     @Override
     public void createCat(String name, Date birthday, String breed, String color, List<Cat> cats) {
         Cat newCat = new Cat(name, birthday, breed, color, cats);
+        Session addNewCatSession = null;
+        Transaction transaction = null;
         try {
-            Session addNewCatSession = getSessionFactory().openSession();
-            Transaction transaction = addNewCatSession.beginTransaction();
+            addNewCatSession = getSessionFactory().openSession();
+            transaction = addNewCatSession.beginTransaction();
             addNewCatSession.persist(newCat);
             transaction.commit();
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
+        } finally {
+            if (addNewCatSession != null && addNewCatSession.isOpen()) {
+                addNewCatSession.close();
+            }
         }
     }
 
@@ -35,13 +44,21 @@ public class CatDao implements CatDaoInterface {
     @Override
     public void update(Cat cat) {
         Session updateCatSession = null;
+        Transaction transaction = null;
         try {
             updateCatSession = getSessionFactory().openSession();
-            Transaction transaction = updateCatSession.beginTransaction();
+            transaction = updateCatSession.beginTransaction();
             updateCatSession.update(cat);
             transaction.commit();
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
+        } finally {
+            if (updateCatSession != null && updateCatSession.isOpen()) {
+                updateCatSession.close();
+            }
         }
     }
 
@@ -49,12 +66,16 @@ public class CatDao implements CatDaoInterface {
     public Cat findById(Integer id) {
         Cat cat = null;
         Session findCatSession = null;
+        Transaction transaction = null;
         try {
             findCatSession = getSessionFactory().openSession();
-            Transaction transaction = findCatSession.beginTransaction();
+            transaction = findCatSession.beginTransaction();
             cat = findCatSession.get(Cat.class, id);
             transaction.commit();
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
             if (findCatSession != null && findCatSession.isOpen()) {
@@ -68,13 +89,17 @@ public class CatDao implements CatDaoInterface {
     @Override
     public void delete(Integer id) {
         Session deleteCatSession = null;
+        Transaction transaction = null;
         try {
             deleteCatSession = getSessionFactory().openSession();
-            Transaction transaction = deleteCatSession.beginTransaction();
+            transaction = deleteCatSession.beginTransaction();
             Cat catForDelete = findById(id);
             deleteCatSession.remove(catForDelete);
             transaction.commit();
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
             if (deleteCatSession != null && deleteCatSession.isOpen()) {

@@ -15,13 +15,22 @@ public class MastersDao implements MastersDaoInterface {
     @Override
     public void createMaster(String name, Date birthday, List<Cat> listOfCat) {
         Master newMaster = new Master(name, birthday, listOfCat);
+        Session addNewMasterSession = null;
+        Transaction transaction = null;
         try {
-            Session addNewMasterSession = getSessionFactory().openSession();
-            Transaction transaction = addNewMasterSession.beginTransaction();
+            addNewMasterSession = getSessionFactory().openSession();
+            transaction = addNewMasterSession.beginTransaction();
             addNewMasterSession.persist(newMaster);
             transaction.commit();
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
+        } finally {
+            if (addNewMasterSession != null && addNewMasterSession.isOpen()) {
+                addNewMasterSession.close();
+            }
         }
     }
 
@@ -33,13 +42,21 @@ public class MastersDao implements MastersDaoInterface {
     @Override
     public void update(Master master) {
         Session updateMasterSession = null;
+        Transaction transaction = null;
         try {
             updateMasterSession = getSessionFactory().openSession();
-            Transaction transaction = updateMasterSession.beginTransaction();
+            transaction = updateMasterSession.beginTransaction();
             updateMasterSession.update(master);
             transaction.commit();
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
+        } finally {
+            if (updateMasterSession != null && updateMasterSession.isOpen()) {
+                updateMasterSession.close();
+            }
         }
     }
 
@@ -47,12 +64,16 @@ public class MastersDao implements MastersDaoInterface {
     public Master findById(Integer id) {
         Master master = null;
         Session findMasterSession = null;
+        Transaction transaction = null;
         try {
             findMasterSession = getSessionFactory().openSession();
-            Transaction transaction = findMasterSession.beginTransaction();
+            transaction = findMasterSession.beginTransaction();
             master = findMasterSession.get(Master.class, id);
             transaction.commit();
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
             if (findMasterSession != null && findMasterSession.isOpen()) {
@@ -66,13 +87,17 @@ public class MastersDao implements MastersDaoInterface {
     @Override
     public void delete(Integer id) {
         Session deleteMasterSession = null;
+        Transaction transaction = null;
         try {
             deleteMasterSession = getSessionFactory().openSession();
-            Transaction transaction = deleteMasterSession.beginTransaction();
+            transaction = deleteMasterSession.beginTransaction();
             Master master = findById(id);
             deleteMasterSession.remove(master);
             transaction.commit();
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         } finally {
             if (deleteMasterSession != null && deleteMasterSession.isOpen()) {

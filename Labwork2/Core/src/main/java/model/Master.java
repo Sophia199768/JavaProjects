@@ -18,7 +18,7 @@ public class Master {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "masterid")
+    @Column(name = "master_id")
     private Integer id;
 
     @Column(name = "name")
@@ -28,7 +28,7 @@ public class Master {
     private Date birthday;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "masters_cats", joinColumns = @JoinColumn(name = "masterid"),  inverseJoinColumns = @JoinColumn(name = "catid"))
+    @JoinTable(name = "masters_cats", joinColumns = @JoinColumn(name = "master_id"),  inverseJoinColumns = @JoinColumn(name = "cat_id"))
     @Fetch(FetchMode.SUBSELECT)
     private List<Cat> cats = new ArrayList<>();
 

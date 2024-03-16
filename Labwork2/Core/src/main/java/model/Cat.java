@@ -15,7 +15,7 @@ public class Cat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "catid")
+    @Column(name = "cat_id")
     private Integer id;
 
     @Column(name = "name")
@@ -31,7 +31,7 @@ public class Cat {
     private String color;
 
    @ManyToMany(fetch = FetchType.EAGER)
-   @JoinTable(name = "Cats_Friend", joinColumns = @JoinColumn(name = "cat_friend_one"),
+   @JoinTable(name = "cats_friend", joinColumns = @JoinColumn(name = "cat_friend_one"),
            inverseJoinColumns = @JoinColumn(name = "cat_friend_two"))
    private List<Cat> friendsCats;
 
