@@ -1,6 +1,5 @@
 package com.example.core.ports;
 
-import com.example.core.model.Cat;
 import com.example.core.model.Master;
 
 import java.util.Date;

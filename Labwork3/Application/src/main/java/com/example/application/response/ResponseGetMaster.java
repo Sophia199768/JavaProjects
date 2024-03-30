@@ -6,7 +6,6 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-
 public class ResponseGetMaster {
     private Integer id;
     private  String name;
