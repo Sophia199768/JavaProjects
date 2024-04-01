@@ -27,7 +27,7 @@ public class MastersController {
         return getMaster;
     }
 
-    @PutMapping("/newmaster")
+    @PostMapping("/newmaster")
     public void create(@RequestBody RequestMaster master) {
         mastersService.createMaster(master.getName(), master.getBirthday());
     }

@@ -32,7 +32,7 @@ public class CatController {
         return getCat;
     }
 
-    @PutMapping("/newcat")
+    @PostMapping("/newcat")
     public void create(@RequestBody RequestCat cat) {
         catsService.createCat(cat.getName(), cat.getBirthday(), cat.getBreed(), cat.getColor());
     }
