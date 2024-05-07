@@ -5,10 +5,25 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/Labwork5/MicroserviceForAccessingCats/pom.xml" />
+        <option value="$PROJECT_DIR$/Labwork5/MicroserviceForAccessingMasters/pom.xml" />
+        <option value="$PROJECT_DIR$/Labwork5/MicroserviceWithExternalInterfaces/pom.xml" />
+        <option value="$PROJECT_DIR$/Labwork5/Application/pom.xml" />
+        <option value="$PROJECT_DIR$/Labwork5/Linkage/pom.xml" />
+        <option value="$PROJECT_DIR$/Labwork5/LinkageCatMaster/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/Labwork5/Core/pom.xml" />
+        <option value="$PROJECT_DIR$/Labwork5/Linkage/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_20" default="true" project-jdk-name="openjdk-20" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="jpab" />
   </component>
 </project>
