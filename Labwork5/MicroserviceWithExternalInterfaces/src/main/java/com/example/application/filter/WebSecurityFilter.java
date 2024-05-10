@@ -28,11 +28,9 @@ public class WebSecurityFilter {
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(role -> role.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(request -> request.requestMatchers( "/cats/**", "/masters/**").authenticated()
-                .requestMatchers("/masters/newmaster").hasAnyRole("ADMIN"))
+                .authorizeHttpRequests(request ->
+                 request.requestMatchers("/masters/newmaster").hasAuthority("ADMIN").anyRequest().authenticated())
                 .userDetailsService(userDetailsService)
                 .build();
     }
-
-
 }

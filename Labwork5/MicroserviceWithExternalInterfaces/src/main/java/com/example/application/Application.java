@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(scanBasePackages = {"com.example.core", "com.example.application"})
-@EntityScan(basePackages = "com.example.core.model")
-@EnableJpaRepositories(basePackages = "com.example.core.ports")
+@SpringBootApplication(scanBasePackages = { "com.example.application"})
+@EntityScan(basePackages = "com.example.linkagecatmaster.models")
+@EnableJpaRepositories(basePackages = "com.example.application.service")
 public class Application {
 
     public static void main(String[] args) {
