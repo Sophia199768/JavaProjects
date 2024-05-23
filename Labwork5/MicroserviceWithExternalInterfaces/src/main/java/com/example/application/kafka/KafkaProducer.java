@@ -8,12 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class KafkaProducer {
-    private final KafkaTemplate<String, Integer> kafkaIntTemplate;
-    private final KafkaTemplate<String, CreateMasterDto> kafkaCreateMasterTemplate;
-    private final KafkaTemplate<String, CatDto> kafkaCatTemplate;
-    private final KafkaTemplate<String, UpdateMasterDto> kafkaMasterTemplate;
-    private final KafkaTemplate<String, MasterIdAndCatIdDto> kafkaMasterCatTemplate;
-    private final KafkaTemplate<String, FriendsDto> kafkaFriendsTemplate;
+    private final KafkaTemplate<String, Object> kafkaIntTemplate;
 
     public void findMasterById(Integer id) {
         kafkaIntTemplate.send("findMasterById", id);
@@ -24,18 +19,17 @@ public class KafkaProducer {
     }
 
     public void createMaster(CreateMasterDto master) {
-        kafkaCreateMasterTemplate.send("createMaster", master);
+        kafkaIntTemplate.send("createMaster", master);
     }
 
     public void createCat(CatDto cat) {
-        kafkaCatTemplate.send("createMaster", cat);
+        kafkaIntTemplate.send("createCat", cat);
     }
 
-    public void updateMasterName(UpdateMasterDto master) {
-        kafkaMasterTemplate.send("updateMasterName", master);
+    public void updateMasterName(UpdateMasterDto master) { kafkaIntTemplate.send("updateMasterName", master);
     }
 
-    public void updateCatName(CatDto cat) { kafkaCatTemplate.send("updateName", cat); }
+    public void updateCatName(CatDto cat) { kafkaIntTemplate.send("updateName", cat); }
 
     public void deleteMaster(Integer id) {
         kafkaIntTemplate.send("deleteMaster", id);
@@ -45,10 +39,10 @@ public class KafkaProducer {
         kafkaIntTemplate.send("deleteCat", id);
     }
 
-    public void addNewCat(MasterIdAndCatIdDto masterCat) { kafkaMasterCatTemplate.send("addNewCat", masterCat); }
+    public void addNewCat(MasterIdAndCatIdDto masterCat) { kafkaIntTemplate.send("addNewCat", masterCat); }
 
     public void  setFriends(FriendsDto friends) {
-        kafkaFriendsTemplate.send("makeFriends", friends);
+        kafkaIntTemplate.send("makeFriends", friends);
     }
 
     public void findAllMasters() {
@@ -57,5 +51,5 @@ public class KafkaProducer {
 
     public void findAllCats() { kafkaIntTemplate.send("findAllCats", 1); }
 
-    public void findAllCatsFiltered(CatDto request) { kafkaCatTemplate.send("findAllCatsFiltered", request); }
+    public void findAllCatsFiltered(CatDto request) { kafkaIntTemplate.send("findAllCatsFiltered", request); }
 }

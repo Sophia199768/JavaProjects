@@ -5,7 +5,6 @@ import com.example.application.kafka.KafkaProducer;
 import com.example.linkagecatmaster.dto.FriendsDto;
 import com.example.application.response.ResponseGetCat;
 import com.example.linkagecatmaster.dto.CatDto;
-import com.example.linkagecatmaster.models.Cat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +23,7 @@ public class CatController {
 
         kafkaProducer.findCatById(id);
 
-       Cat cat;
+       CatDto cat;
         try {
             cat = kafkaConsumer.waitForCatResponse();
         } catch (InterruptedException e) {
@@ -75,16 +74,8 @@ public class CatController {
     }
 
     @GetMapping("/all")
-    public List<ResponseGetCat> getAll() throws InterruptedException {
+    public List<CatDto> getAll() throws InterruptedException {
         kafkaProducer.findAllCats();
-        return kafkaConsumer.waitForAllCatsResponse().stream().map(cat -> {
-            ResponseGetCat response = new ResponseGetCat();
-            response.setId(cat.getId());
-            response.setName(cat.getName());
-            response.setBirthday(cat.getBirthday());
-            response.setBreed(cat.getBreed());
-            response.setColor(cat.getColor());
-            return response;
-        }).collect(Collectors.toList());
+        return kafkaConsumer.waitForAllCatsResponse();
     }
 }

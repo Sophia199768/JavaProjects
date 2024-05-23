@@ -4,6 +4,7 @@ import com.example.application.kafka.KafkaConsumer;
 import com.example.application.kafka.KafkaProducer;
 import com.example.application.response.ResponseGetMaster;
 import com.example.linkagecatmaster.dto.CreateMasterDto;
+import com.example.linkagecatmaster.dto.MasterDto;
 import com.example.linkagecatmaster.dto.MasterIdAndCatIdDto;
 import com.example.linkagecatmaster.dto.UpdateMasterDto;
 import com.example.linkagecatmaster.models.Master;
@@ -25,7 +26,7 @@ public class MastersController {
 
         kafkaProducer.findMasterById(id);
 
-        Master master;
+        MasterDto master;
         try {
           master = kafkaConsumer.waitForMasterResponse();
         } catch (InterruptedException e) {
@@ -60,13 +61,8 @@ public class MastersController {
     }
 
     @GetMapping("/all")
-    public List<ResponseGetMaster> getAll() throws InterruptedException {
+    public List<MasterDto> getAll() throws InterruptedException {
         kafkaProducer.findAllMasters();
-        return kafkaConsumer.waitForAllMasterResponse().stream().map(master -> {ResponseGetMaster response = new ResponseGetMaster();
-            response.setId(master.getId());
-            response.setName(master.getLogin());
-            response.setBirthday(master.getBirthday());
-            return response;
-        }).collect(Collectors.toList());
+        return kafkaConsumer.waitForAllMasterResponse();
     }
 }

@@ -32,7 +32,8 @@ public class KafkaConsumer {
 
     @KafkaListener(topics = "findMasterById", groupId = "consumer")
     public void listenerForFindMasterById(Integer id) {
-        masterRepositoryInterface.findMasterById(id);
+        Master master = masterRepositoryInterface.findMasterById(id);
+        kafkaProducer.findMasterId(master);
     }
 
     @KafkaListener(topics = "createMaster", groupId = "consumer")

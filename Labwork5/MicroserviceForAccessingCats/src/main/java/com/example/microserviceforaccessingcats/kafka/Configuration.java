@@ -12,4 +12,12 @@ public class Configuration {
                 "allCats", 1, (short)1);
     }
 
+
+    @Bean
+    public NewTopic findCat() {
+        return new NewTopic(
+                "findCat", 1, (short)1);
+    }
+
+
 }

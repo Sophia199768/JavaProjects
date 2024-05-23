@@ -7,11 +7,19 @@ import com.example.linkagecatmaster.dto.MasterIdAndCatIdDto;
 import com.example.linkagecatmaster.models.Cat;
 import com.example.microserviceforaccessingcats.service.CatsService;
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -19,7 +27,6 @@ import java.util.List;
 public class KafkaConsumer {
     private final CatsService catsService;
     private final KafkaProducer kafkaProducer;
-
 
     @KafkaListener(topics = "addNewCat", groupId = "consumer")
     public void addNewCatListener(MasterIdAndCatIdDto ids) {
@@ -55,7 +62,7 @@ public class KafkaConsumer {
     }
 
     @KafkaListener(topics = "findAllCats", groupId = "consumer")
-    public void findAllCats() {
+    public void findAllCats(Integer id) {
         List<Cat> cats = catsService.findAll();
         kafkaProducer.findAllCats(cats);
     }

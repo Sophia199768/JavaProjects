@@ -27,6 +27,13 @@ public class Configuration {
     @Bean
     public NewTopic allMasters() {
         return new NewTopic(
-                " allMasters", 1, (short)1);
+                "allMasters", 1, (short)1);
+    }
+
+
+    @Bean
+    public NewTopic findMaster() {
+        return new NewTopic(
+                "findMaster", 1, (short)1);
     }
 }
